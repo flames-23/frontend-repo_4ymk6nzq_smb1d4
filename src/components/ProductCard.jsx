@@ -1,6 +1,8 @@
 import { Star } from 'lucide-react'
+import { useCart } from './CartContext'
 
 export default function ProductCard({ product }) {
+  const { addToCart } = useCart()
   const discount = product.mrp ? Math.round(((product.mrp - product.price) / product.mrp) * 100) : null
   return (
     <div className="group rounded-lg border border-gray-200 hover:border-blue-300 bg-white overflow-hidden shadow-sm hover:shadow-md transition">
@@ -20,7 +22,7 @@ export default function ProductCard({ product }) {
           {product.mrp && <span className="text-gray-400 line-through text-sm">₹{product.mrp}</span>}
           {discount !== null && <span className="text-green-600 text-sm font-medium">{discount}% off</span>}
         </div>
-        <button className="mt-3 w-full bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium py-1.5 rounded-md">Add to cart</button>
+        <button onClick={(e) => { e.preventDefault(); addToCart(product, 1) }} className="mt-3 w-full bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium py-1.5 rounded-md">Add to cart</button>
       </div>
     </div>
   )

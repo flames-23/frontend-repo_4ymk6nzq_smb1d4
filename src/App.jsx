@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useState } from 'react'
-import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import ProductCard from './components/ProductCard'
+import Layout from './components/Layout'
+import { Link } from 'react-router-dom'
 
 const API = import.meta.env.VITE_BACKEND_URL || ''
 
@@ -45,8 +46,7 @@ export default function App() {
   const filtered = useMemo(() => products, [products])
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Navbar onSearch={(v) => { setQuery(v); fetchProducts() }} />
+    <Layout onSearch={(v) => { setQuery(v); fetchProducts() }}>
       <Hero banners={banners} />
 
       <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
@@ -72,7 +72,9 @@ export default function App() {
             ) : (
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                 {filtered.map((p) => (
-                  <ProductCard key={p._id} product={p} />
+                  <Link key={p._id} to={`/product/${p._id}`}>
+                    <ProductCard product={p} />
+                  </Link>
                 ))}
               </div>
             )}
@@ -85,7 +87,9 @@ export default function App() {
           ) : (
             <div className="grid grid-cols-2 gap-3">
               {filtered.map((p) => (
-                <ProductCard key={p._id} product={p} />
+                <Link key={p._id} to={`/product/${p._id}`}>
+                  <ProductCard product={p} />
+                </Link>
               ))}
             </div>
           )}
@@ -102,6 +106,6 @@ export default function App() {
           </div>
         </div>
       </footer>
-    </div>
+    </Layout>
   )
 }

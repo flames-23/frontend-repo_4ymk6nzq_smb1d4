@@ -1,7 +1,9 @@
 import { Search, ShoppingCart, User, Menu } from 'lucide-react'
 import { Link } from 'react-router-dom'
+import { useCart } from './CartContext'
 
 export default function Navbar({ onSearch }) {
+  const { itemCount } = useCart()
   return (
     <header className="sticky top-0 z-30 bg-white/80 backdrop-blur border-b border-gray-200">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -28,7 +30,7 @@ export default function Navbar({ onSearch }) {
             <button className="px-3 py-1.5 rounded-md text-sm font-medium hover:bg-gray-100">Become a Seller</button>
             <button className="px-3 py-1.5 rounded-md text-sm font-medium hover:bg-gray-100">More</button>
             <Link to="/cart" className="flex items-center gap-1 px-3 py-1.5 rounded-md text-sm font-medium hover:bg-gray-100">
-              <ShoppingCart size={18} /> Cart
+              <ShoppingCart size={18} /> Cart {itemCount > 0 && (<span className="ml-1 inline-flex items-center justify-center px-2 py-0.5 text-xs bg-blue-600 text-white rounded-full">{itemCount}</span>)}
             </Link>
           </nav>
         </div>
